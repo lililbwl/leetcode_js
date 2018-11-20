@@ -7,6 +7,6 @@
 
 
 此仓库的作用：
-            我将会利用JavaScript来实现LeetCode的中文本版本(领扣中国:https://leetcode-cn.com/)上的算法题
+            我将会利用JavaScript来实现LeetCode的中文本版本(领扣中国:https://leetcode-cn.com/) 上的算法题
 
 本地运行环境：NodeJS 6.0.2
