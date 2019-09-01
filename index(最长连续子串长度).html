@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+
+	<body>
+		<pre>
+			给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
+
+示例 1:
+
+输入: "abcabcbb"
+输出: 3 
+解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
+示例 2:
+
+输入: "bbbbb"
+输出: 1
+解释: 因为无重复字符的最长子串是 "b"，所以其长度为 1。
+示例 3:
+
+输入: "pwwkew"
+输出: 3
+解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
+     请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
+		</pre>
+		<script>
+			var lengthOfLongestSubstring = function(s) {
+
+				//利用if对可能的边缘情况，以及两个字母的字串做简单的匹配并返回
+				if(s == "") {
+					return 0;
+				}
+				if(s == " ") {
+					return 1;
+				}
+				if(s.length == 1) {
+					return 1;
+				}
+				if(s.length == 2) {
+					if(s[0] == s[1]) {
+						return 1;
+					} else {
+						return 2;
+					}
+				}
+
+				//实现逻辑：暴力寻找所有连续不重复字串的并且记录其长度，保存在一个数组中
+				//对保存长度的数组进行降序排序
+				//返回index为0的数组元素即为当前字串的最长不重复子串的长度
+				var numArr = [];
+				var strArr = s.split("");
+				var currentLength = 0;
+				var obj = {};
+				fatherLoop: for(let i = 0; i < strArr.length; i++) {
+					//对字串的最后一个元素添加长度为1，也就执行到了最后
+					if(i == strArr.length - 1) {
+						numArr.push(1);
+						break fatherLoop;
+					} else {
+						obj = {};
+						obj[strArr[i]] = "1";
+						loop: for(let j = i + 1; j < strArr.length; j++) {
+							//可要可不要！
+							if(currentLength + 1 == strArr.length) {
+								return strArr.length;
+							}
+							if(obj[strArr[j]]) {
+								numArr.push(currentLength + 1);
+								currentLength = 0;
+								break loop;
+							} else {
+								obj[strArr[j]] = "1";
+								currentLength++;
+								//应对abb情况，在跳出子循环的时候+1
+								if(j == strArr.length - 1) {
+									numArr.push(currentLength + 1);
+									currentLength = 0;
+								}
+							}
+						}
+					}
+				}
+				var nowArr = numArr.sort(function(a, b) {
+					return b - a
+				});
+				return nowArr[0];
+			};
+			console.log(lengthOfLongestSubstring("aab"));
+		</script>
+	</body>
+
+</html>
