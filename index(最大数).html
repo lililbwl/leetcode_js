@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		给定一组非负整数，重新排列它们的顺序使之组成一个最大的整数。 示例 1: 输入: [10,2] 输出: 210 示例 2: 输入: [3,30,34,5,9] 输出: 9534330 说明: 输出结果可能非常大，所以你需要返回一个字符串而不是整数。
+
+		<script>
+			var largestNumber = function(nums) {
+				//边缘情况考虑，全部为0时候，直接返回"0"
+				var sum = 0;
+				for(let i = 0; i < nums.length; i++) {
+					sum += nums[i];
+				}
+				if(sum == 0) {
+					return "0";
+				}
+				var newArr = [];
+				for(let i = 0; i < nums.length; i++) {
+					newArr.push(String(nums[i]));
+				}
+				//核心解法为利用字符串的大小比对来实现排序替换
+				//在替换的逻辑内，增加判断当前两数组合后的数字的大小再进行替换，例如：34<321 需要组成的是34321  不是32134  
+				//冒泡对字符数组进行排序
+				
+				for(let i = 0; i < newArr.length - 1; i++) {
+					for(let j = 0; j < newArr.length - i - 1; j++) {
+						if(newArr[j] < newArr[j + 1]) {
+							var fontNum = parseInt(newArr[j] + newArr[j + 1]);
+							var endNum = parseInt(newArr[j + 1] + newArr[j]);
+							if(fontNum < endNum) {
+								var swap = newArr[j];
+								newArr[j] = newArr[j + 1];
+								newArr[j + 1] = swap;
+							}
+						} else {
+							var fontNum = parseInt(newArr[j] + newArr[j + 1]);
+							var endNum = parseInt(newArr[j + 1] + newArr[j]);
+							if(fontNum < endNum) {
+								var swap = newArr[j];
+								newArr[j] = newArr[j + 1];
+								newArr[j + 1] = swap;
+							}
+						}
+
+					}
+				}
+				return newArr.join("");
+			};
+			console.log(largestNumber([121, 12]));
+		</script>
+	</body>
+
+</html>
