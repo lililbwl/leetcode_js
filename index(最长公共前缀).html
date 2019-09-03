@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		编写一个函数来查找字符串数组中的最长公共前缀。
+
+如果不存在公共前缀，返回空字符串 ""。
+
+示例 1:
+
+输入: ["flower","flow","flight"]
+输出: "fl"
+示例 2:
+
+输入: ["dog","racecar","car"]
+输出: ""
+解释: 输入不存在公共前缀。
+说明:
+
+所有输入只包含小写字母 a-z 。
+		<script>
+			//提取strs数组中的第一个字符串作为对比字符串firstStr
+			//循环firstStr中的每一个字符
+			//循环Strs数组中剩余的字符串中是否存在firstStr中同样下标位置
+			//同样的值
+			//有：判断当前的strs的循环是否已经达到了最后，是则添加当前firstStr的元素
+			//否：到达临界，直接退出，返回已有的公共的前缀即可
+			var longestCommonPrefix = function(strs) {
+				if(strs.length == 0) {
+					return "";
+				}
+				if(strs.length == 1) {
+					return strs[0];
+				}
+				var firstStr = strs[0];
+				var common = [];
+				for(let j = 0; j < firstStr.length; j++) {
+					for(let i = 1; i < strs.length; i++) {
+						//对同一个下标下的字符进行比较，这里有考虑数组越界的情况，但是通过查看循环条件判定，该处的数组是不会出现越界的情况的
+						if(String(strs[i][j]).indexOf(firstStr[j]) == -1) {
+							//不存在
+							return common.join("");
+						} else {
+							//存在
+							if(i == strs.length - 1) {
+								common.push(firstStr[j]);
+							}
+						}
+					}
+				}
+				return common.join("");
+
+			};
+		</script>
+	</body>
+
+</html>
