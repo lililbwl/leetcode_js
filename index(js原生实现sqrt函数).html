@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			function createSqrt(num){
+				//二分法,不断逼近
+				var low = 0;
+				var high = num;
+				var mid = (high+low)/2
+				while(Math.abs(mid * mid - num) > 0.000001 ){
+					if(mid * mid > num){
+						high = mid;
+					}
+					if(mid * mid < num){
+						low = mid
+					}
+					mid = (low+high)/2;
+				}
+				return mid;
+			}
+			console.log(createSqrt(3));
+		</script>
+	</body>
+</html>
