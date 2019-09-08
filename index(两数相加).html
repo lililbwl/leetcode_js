@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
+
+如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。
+
+您可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+
+示例：
+
+输入：(2 -> 4 -> 3) + (5 -> 6 -> 4)
+输出：7 -> 0 -> 8
+原因：342 + 465 = 807
+<script type="text/javascript">
+	//获取两条链表中值，并分别存入数组中
+	//利用js.reverse()对数组进行反转
+	//两数相加后，利用String() split() reverse()得到最后的值
+	//将得到的结果进行平台约定的构造链表，返回即可
+	//坑1：平台规定的js链表格式为：{val:1,next:{val:2,next:{val:3,next:null}}}  需要打印获取结构  且最后构造时候不容易
+	//坑2：JS语言特性 大数相加会损失精度，需要对大数相加做单独处理，利用字符串相加解决
+	/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var addTwoNumbers = function(l1, l2) {
+    // if(l1.length==1 && l1[0].val == "0" && l2.length == 1 && l1[0].val == "0"){
+    //     return [0];
+    // }
+    var l1Arr = [];
+    var l2Arr = [];
+    //将链表l1 l2中数据取出
+    var l1Str = "";
+    var l2Str = "";
+    var tar1 = l1.next;
+    l1Str += l1.val;
+    while(tar1 != null){
+        l1Str += tar1.val;
+        tar1 = tar1.next
+    }
+    var tar2 = l2.next;
+    l2Str += l2.val;
+    while(tar2 != null){
+        l2Str += tar2.val;
+        tar2 = tar2.next
+    }
+    if(l1Str.length == 1 && l2Str.length == 1 && l1Str[0] == "0" && l2Str[0] == "0" ){
+        var o = {};
+        o.val = 0;
+        o.next = null;
+        return o;
+    }
+    var newL1 = l1Str.split("").reverse().join("");
+    var newL2 = l2Str.split("").reverse().join("");
+    console.log(newL1);
+    console.log(newL2);
+    
+    var sum = sumStrings(newL1,newL2);
+    console.log(sum);
+    var sumStr = String(sum).split("").reverse().join("");
+    console.log(sumStr);
+    var sumArr = sumStr.split("");
+    console.log(sumArr);
+    var objArr = [];
+    var smpObj = {};
+    for(let i = sumArr.length-1;i>=0;i--){
+        if(sumArr.length==1){
+            smpObj.val = sumArr[i];
+            smpObj.next = null; 
+        }else{
+            if(i>0){
+            var obj = {};
+        if(!(smpObj.val)){
+            obj = smpObj;
+            obj.val = sumArr[i];
+            obj.next = null;
+        }else{
+            obj = smpObj;
+        }
+        var obj1 = {};
+        obj1.val = sumArr[i-1];
+        obj1.next = obj;
+        
+        smpObj = obj1;
+        }else{
+            // smpObj.val = sumArr[i];
+            // smpObj.next = null;        
+        }
+        }
+        
+        
+    }
+    return smpObj;
+};
+
+function sumStrings(a,b){
+    var res='', c=0;
+    a = a.split('');
+    b = b.split('');
+    console.log(a);
+    console.log(b);
+    while (a.length || b.length || c){
+        c += ~~a.pop() + ~~b.pop();
+        res = c % 10 + res;
+        //console.log(res);
+        c = c>9;
+    }
+    return res.replace(/^0+/,'');
+}
+</script>
+	</body>
+</html>
