@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		实现 int sqrt(int x) 函数。
+
+计算并返回 x 的平方根，其中 x 是非负整数。
+
+由于返回类型是整数，结果只保留整数的部分，小数部分将被舍去。
+
+示例 1:
+
+输入: 4
+输出: 2
+示例 2:
+
+输入: 8
+输出: 2
+说明: 8 的平方根是 2.82842..., 
+     由于返回类型是整数，小数部分将被舍去。
+		<script>
+		//折半查找近似值，且按照题目要求格式化输出即可
+			/**
+ * @param {number} x
+ * @return {number}
+ */
+var mySqrt = function(x) {
+    if(x == 1){
+        return 1;
+    }
+   var low = 0;
+				var high = x;
+				var mid = (high+low)/2
+				while(Math.abs(mid * mid - x) > 0.000001 ){
+					if(mid * mid > x){
+						high = mid;
+					}
+					if(mid * mid < x){
+						low = mid
+					}
+					mid = (low+high)/2;
+				}
+    //处理小数，完成结构化输出
+    if(String(mid).indexOf(".") != -1){
+        //存在小数
+        return String(mid).substring(0,String(mid).indexOf("."));
+    }else{
+        return mid;
+    }
+};
+		</script>
+	</body>
+
+</html>
